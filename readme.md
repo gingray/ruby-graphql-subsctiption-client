@@ -21,7 +21,7 @@ class BackendSchema < GraphQL::Schema
   # Assume that use ActionCable
   use GraphQL::Subscriptions::ActionCableSubscriptions, redis: Redis.new
   subscription(Types::SubscriptionType)
-  # remove other configs to not to distract attention
+  # other configs removed to not to distract attention
 end
 ```
 
@@ -29,10 +29,28 @@ end
 # app/graphql/types/subscription_type.rb
 module Types
   class SubscriptionType < Types::BaseObject
-    field :hello, String, null: false
+    field :notify_display, subscription: Subscription::NotifyDisplay
+  end
+end
+```
 
-    def hello
-      'hello'
+```ruby
+# app/graphql/subscription/notify_display.rb
+
+module Subscription
+  class NotifyDisplay < Subscription::BaseSubscription
+    argument :display_id, Int, required: true
+    field :message, String, null: true
+
+    def subscribe(display_id:)
+      :no_response
+    end
+
+    def update(display_id:)
+      # where object come from its payload which send
+      # thorugh the trigger function
+      # https://graphql-ruby.org/subscriptions/triggers.html
+      { message: object }
     end
   end
 end

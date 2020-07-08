@@ -31,7 +31,9 @@ const client = new ApolloClient({
 });
 
 const query = gql`subscription {
-    hello
+    notifyDisplay(displayId: 1) {
+        message
+    }
 }`;
 
 const operation = {
