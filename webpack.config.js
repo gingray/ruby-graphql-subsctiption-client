@@ -1,13 +1,14 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
+// CHANGE HERE FILE NAMES REGULAR ACTION CABLE OR GRAPHQL ACTION CABLE BUILD
 module.exports = {
-    entry: {index: path.resolve(__dirname, "src", "index.js")},
+    entry: {index: path.resolve(__dirname, "src", "index_regular_action_cable.js")},
     output: {
         path: path.resolve(__dirname, "build")
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, "src", "index.html")
+            template: path.resolve(__dirname, "src", "index_regular_action_cable.html")
         })
     ],
     node: {

@@ -30,9 +30,26 @@ const client = new ApolloClient({
     cache: new InMemoryCache()
 });
 
-const query = gql`subscription {
-    notifyDisplay(displayId: 1) {
-        message
+const query = gql`subscription{
+    onDisplayUpdate(displayId: 1){
+        payload{
+            ...on NotifyDisplay {
+                payloadType
+                notifyType
+                duration
+                message
+            }
+            ...on NotifyGalleryWidget{
+                payloadType
+                gallery {
+                    galleryWidgets {
+                        widget {
+                            name
+                        }
+                    }
+                }
+            }
+        }
     }
 }`;
 
